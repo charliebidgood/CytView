@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import warnings
 
-import cvstat
+from cytview import cvstat
 
 def point_plot(dataframe, measurment, identifier, groupings, labels, y_label=None, color='salmon', compare=None, figsize=None, draw=False):
 
