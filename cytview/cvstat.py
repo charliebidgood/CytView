@@ -12,7 +12,7 @@ def significance(p):
    else: return("")
 
 
-def draw_lines(p_value, compare, groupings, box_data):
+def draw_lines(pval_list, compare, groupings, box_data):
     # padding counter to prevent overlap of connecting lines
     pad_counter = np.full(shape=len(groupings), fill_value =0)
     
@@ -48,7 +48,7 @@ def draw_lines(p_value, compare, groupings, box_data):
 
         # show significance symbols
         text_coord = (compare[n][1] + compare[n][0]) / 2
-        plt.text(text_coord, linemax, significance(p_value), ha="center", fontsize=20)
+        plt.text(text_coord, linemax, significance(pval_list[n]), ha="center", fontsize=20)
 
         # add to padding counters
         pad_counter[compare[n][0]] = pad_counter[compare[n][0]] + 1
@@ -60,7 +60,9 @@ def draw_lines(p_value, compare, groupings, box_data):
 def multi_comparison(dataframe, compare, groupings, labels, box_data, draw):
     
     print(box_data)
-      
+    
+    pval_list = []
+    
     n = 0
     while n < len(compare):
 
@@ -68,9 +70,12 @@ def multi_comparison(dataframe, compare, groupings, labels, box_data, draw):
         test_means = np.mean(dataframe.loc[:,groupings[compare[n][1]]])
         
         p_value = scipy.f_oneway(control_means, test_means)[1]
+        pval_list.append(p_value)
+        
         print(labels[compare[n][0]], "vs", labels[compare[n][1]], ": p value: ", str(round(p_value,6)))
                
         n = n + 1
         
     if draw:
-        draw_lines(p_value, compare, groupings, box_data)
+        draw_lines(pval_list, compare, groupings, box_data)
+        
