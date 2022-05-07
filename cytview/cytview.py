@@ -58,7 +58,7 @@ def point_plot(dataframe, measurment, identifier, groupings, labels, y_label=Non
     control_line = np.median(grouped_df.iloc[:,0])
     plt.axhline(y=control_line, color='black', linestyle='--')
     plt.tight_layout()
-    plt.show()
+    return(figure)
 
 
 
