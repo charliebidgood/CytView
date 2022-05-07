@@ -37,7 +37,11 @@ def point_plot(dataframe, measurment, identifier, groupings, labels, y_label=Non
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         warnings.warn("UserWarning arose", UserWarning)
-        sns.swarmplot(data=grouped_df, size=3, zorder=0.5, color=color)
+
+        
+        pal = sns.set_palette(sns.color_palette(color))
+
+        sns.swarmplot(data=grouped_df, size=3, zorder=0.5,  palette=pal)
     
     sns.boxplot(data=grouped_df, boxprops=dict(alpha=.5), whis=0.3,
                 color="black", sym='')
