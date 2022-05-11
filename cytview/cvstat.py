@@ -74,7 +74,7 @@ def multi_comparison(dataframe, compare, groupings, labels, box_data, draw):
         p_value = scipy.f_oneway(control_means, test_means)[1]
         pval_list.append(p_value)
         
-        print(labels[comparison[0]], "vs", labels[comparison[1]], ": p value: ", str(round(p_value,6)))
+        print(labels[comparison[0]], "vs", labels[comparison[1]], ": p value: ", str(round(p_value,6)), " - ", significance(p_value))
                
         n = n + 1
         
