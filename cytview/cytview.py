@@ -6,7 +6,7 @@ import warnings
 
 from cytview import cvstat
 
-def point_plot(dataframe, measurment, identifier, groupings, labels, y_label=None, color='salmon', compare=None, figsize=None, draw=False):
+def point_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 1000, color="Accent", compare=None, figsize=None, draw=False):
 
     # generate a list of all values for each unique identifier
     combined_object = dataframe.groupby(identifier)[measurment].apply(list)
@@ -15,8 +15,8 @@ def point_plot(dataframe, measurment, identifier, groupings, labels, y_label=Non
     combined_object = pd.DataFrame({k: pd.Series(l) for k, l in combined_object.items()}).apply(pd.to_numeric)
     
     # cut off dataframe to 1000 sample observations to prevent computational strain
-    combined_object = combined_object[0:1000] 
- 
+    combined_object = combined_object[0:obs_max] 
+    
     # generate a dataframe containing the means of replicate samples
     grouped_df = pd.DataFrame([]) 
     means = pd.DataFrame([]) 
@@ -29,36 +29,31 @@ def point_plot(dataframe, measurment, identifier, groupings, labels, y_label=Non
     for column in range(grouped_df.shape[1]):
         grouped_df.columns.values[column] = labels[column]
     
-    
     # plotting functions
-    figure = plt.figure(figsize=figsize)
-    plt.ylabel(y_label, fontsize = 15)
+    plt.figure(figsize=figsize)
+    plt.ylabel(measurment, fontsize = 15)
 
     with warnings.catch_warnings():
+         
         warnings.simplefilter("ignore")
         warnings.warn("UserWarning arose", UserWarning)
-
         
         pal = sns.set_palette(sns.color_palette(color))
-
         sns.swarmplot(data=grouped_df, size=3, zorder=0.5,  palette=pal)
     
     sns.boxplot(data=grouped_df, boxprops=dict(alpha=.5), whis=0.3,
                 color="black", sym='')
 
     # collect boxplot details for statistical comparison and visualisation
-    box_data = grouped_df.describe()
+    summary = grouped_df.describe()
     
-    if(compare==None):
-        pass
-    else:
+    if(compare!=None):
         cvstat.multi_comparison(dataframe = combined_object, compare=compare, 
-                                 groupings=groupings, labels=labels, box_data=box_data, draw=draw)
-    
-    control_line = np.median(grouped_df.iloc[:,0])
-    plt.axhline(y=control_line, color='black', linestyle='--')
-    plt.tight_layout()
-    return(figure)
+                                 groupings=groupings, labels=labels, summary=summary, draw=draw)
+        
+
+   
+    return(summary)
 
 
 

@@ -1,3 +1,4 @@
+from cgi import test
 import matplotlib.pylab as plt
 import numpy as np
 import scipy.stats as scipy
@@ -12,7 +13,7 @@ def significance(p):
    else: return("")
 
 
-def draw_lines(pval_list, compare, groupings, box_data):
+def draw_lines(pval_list, compare, groupings, summary):
     # padding counter to prevent overlap of connecting lines
     pad_counter = np.full(shape=len(groupings), fill_value =0)
     
@@ -21,12 +22,12 @@ def draw_lines(pval_list, compare, groupings, box_data):
         
         comparison = compare[n]        
         # pull boxplot data and esitamate the whisker length for both boxes
-        b1_iqr = box_data.iloc[:,comparison[0]]["75%"]
-        b1_mean = box_data.iloc[:,comparison[0]]["mean"]
+        b1_iqr = summary.iloc[:,comparison[0]]["75%"]
+        b1_mean = summary.iloc[:,comparison[0]]["mean"]
         b1_whis = b1_iqr - b1_mean
 
-        b2_iqr = box_data.iloc[:,comparison[1]]["75%"]
-        b2_mean = box_data.iloc[:,comparison[1]]["mean"]
+        b2_iqr = summary.iloc[:,comparison[1]]["75%"]
+        b2_mean = summary.iloc[:,comparison[1]]["mean"]
         b2_whis = b2_iqr - b2_mean
 
         # calculate y distances respective to the padding counter
@@ -58,26 +59,28 @@ def draw_lines(pval_list, compare, groupings, box_data):
         n = n + 1
 
 
-def multi_comparison(dataframe, compare, groupings, labels, box_data, draw):
+def multi_comparison(dataframe, compare, groupings, labels, summary, draw):
     
-    print(box_data)
     pval_list = []
-    
     n = 0
+    
     while n < len(compare):
-        
+         
         comparison = compare[n]
         
         control_means =  np.mean(dataframe.loc[:,groupings[comparison[0]]])
         test_means = np.mean(dataframe.loc[:,groupings[comparison[1]]])
+           
+        if len(control_means) < 2 or len(test_means) < 2:
+            print("2 or more observations per sample (n) are required for statistics")
+            break
         
         p_value = scipy.f_oneway(control_means, test_means)[1]
         pval_list.append(p_value)
         
-        print(labels[comparison[0]], "vs", labels[comparison[1]], ": p value: ", str(round(p_value,6)), " - ", significance(p_value))
+        print(labels[comparison[0]], "vs", labels[comparison[1]], ": p value: ", str(round(p_value,6)), " (", significance(p_value), ")")
                
         n = n + 1
         
-    if draw:
-        draw_lines(pval_list, compare, groupings, box_data)
-        
+    if draw and len(control_means) > 2 or len(test_means) > 2:
+        draw_lines(pval_list, compare, groupings, summary)
