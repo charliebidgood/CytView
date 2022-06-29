@@ -61,11 +61,13 @@ def draw_lines(pval_list, compare, groupings, summary):
 
 def multi_comparison(dataframe, compare, groupings, labels, summary, draw):
     
+    perform_stats = True
     pval_list = []
     n = 0
     
     while n < len(compare):
          
+
         comparison = compare[n]
         
         control_means =  np.mean(dataframe.loc[:,groupings[comparison[0]]])
@@ -73,6 +75,7 @@ def multi_comparison(dataframe, compare, groupings, labels, summary, draw):
            
         if len(control_means) < 2 or len(test_means) < 2:
             print("2 or more observations per sample (n) are required for statistics")
+            perform_stats = False
             break
         
         p_value = scipy.f_oneway(control_means, test_means)[1]
@@ -82,5 +85,7 @@ def multi_comparison(dataframe, compare, groupings, labels, summary, draw):
                
         n = n + 1
         
-    if draw and len(control_means) > 2 or len(test_means) > 2:
+
+
+    if draw == True and perform_stats == True:
         draw_lines(pval_list, compare, groupings, summary)

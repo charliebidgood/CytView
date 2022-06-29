@@ -6,7 +6,23 @@ import warnings
 
 from cytview import cvstat
 
-def point_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 1000, color="Accent", compare=None, figsize=None, draw=False):
+def cell_plot(dataframe, measurment, identifier, obs_max = 1000, color="Accent"):
+    
+    dataframe = dataframe[0:obs_max]
+
+    with warnings.catch_warnings():
+        
+        warnings.simplefilter("ignore")
+        warnings.warn("UserWarning arose", UserWarning)
+        
+        pal = sns.set_palette(sns.color_palette(color))
+        sns.swarmplot(data=dataframe, size=3, zorder=0.5,  palette=pal)
+
+    sns.boxplot(data=dataframe, boxprops=dict(alpha=.5), whis=0.3,
+                color="black", sym='')
+
+
+def group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 1000, color="Accent", compare=None, figsize=None, draw=False):
 
     # generate a list of all values for each unique identifier
     combined_object = dataframe.groupby(identifier)[measurment].apply(list)
@@ -30,7 +46,6 @@ def point_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 1
         grouped_df.columns.values[column] = labels[column]
     
     # plotting functions
-    plt.figure(figsize=figsize)
     plt.ylabel(measurment, fontsize = 15)
 
     with warnings.catch_warnings():
@@ -50,9 +65,7 @@ def point_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 1
     if(compare!=None):
         cvstat.multi_comparison(dataframe = combined_object, compare=compare, 
                                  groupings=groupings, labels=labels, summary=summary, draw=draw)
-        
-
-   
+           
     return(summary)
 
 
