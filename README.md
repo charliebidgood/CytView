@@ -1,7 +1,7 @@
 
 <img src="static/logo.png" />
 
-### CytView is a python library which has been developed to handle high-throughout single cell datasets generated from software such as CellProfiler. 
+### CytView is a python library which has been developed to handle high-throughout single cell imaging datasets generated from software such as CellProfiler. 
 
 
 ## API Reference
@@ -35,7 +35,7 @@ Sample single-cell observations and group samples by experimental replicates.ell
 ```python
 group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 500, color="Accent", compare=None, draw=False)
 ```
-<img src="static/grouped_plot.png" />
+<img src="static/grouped_plot.png" width="300" />
 
 
 ```python
