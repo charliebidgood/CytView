@@ -1,12 +1,20 @@
 
 <img src="static/logo.png" />
 
-### CytView is a python library which has been developed to handle high-throughout single cell imaging datasets generated from software such as CellProfiler. 
+## CytView is a python library which has been developed to handle high-throughout single cell imaging datasets generated from software such as CellProfiler. 
 
 
-## API Reference
+<br><br>
 
-### Example: Input Matrix (first 5 rows)
+### A jupyter notebook (example.ipynb) and example dataset (dataset/experiment.csv) has been included within this repository to assist with ease-of-use.
+
+<br>
+
+
+## API Reference:
+<br>
+
+### Example: experiment.csv (first 5 rows):
 
 
 | ImageNumber | ObjectNumber | Metadata_Well | Measurement_1 | Measurement_2 |
@@ -17,30 +25,86 @@
 | 1           | 4            | A04           | 0.006413796   | 0.006516079   |
 | 1           | 5            | A04           | 0.005213105   | 0.059943293   |
 
+<br>
 
 ##  cytview.cell_plot()
 
-```python
-cytview.cell_plot(dataframe, measurment, identifier, obs_max = 500, color="Accent")
-```
-
 Randomly sample a subset of single-cell observations and plot cell-by-cell values CytView makes use of seaborn's swarmplot() and boxplot() functions and thus any plot-related parameters can be tweaked using matplotlib.
 
+
+```python
+cytview.cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Accent")
+```
+
+*dataframe (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
+
+*measurement (string): DataFrame column name containing the measurement of interest. In the case of experiment.csv, this would be "Measurement_1".*
+
+*identifier (string): DataFrame column name containing the identifier which aggregates each cell into an experimental group. In the case of experiment.csv, this would be "Metadata_Well" which represents what well of a 96-well plate that a cell belongs to*
+
+*obs_max (int): Number of observations per group to randomly sample (default 500)*
+
+*color: Matplotlib or seaborn color palette (default "Accent"). You can also define custom colors with sns.set_palette(sns.color_palette([colors]))*
+
+cell_plot() also returns a dictionary containing the down-sampled dataframe which can be called with cell_plot()["dataframe"] and a data summary which can be called with cell_plot()["summary"]
+
+
+Example Output:
 <img src="static/cell_plot.png" />
 
 
+<br>
+<br>
+
 ##  cytview.group_plot()
-Sample single-cell observations and group samples by experimental replicates.ell-by-cell values CytView makes use of seaborn's swarmplot() and boxplot
+Sample single-cell observations, group samples as experimental replicates and perform comparative statistics to determine significance.
 
 ```python
-group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 500, color="Accent", compare=None, draw=False)
+cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 500, color="Accent", compare=None, draw=False)
 ```
+
+*dataframe (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
+
+*measurement (string): DataFrame column name containing the measurement of interest. In the case of experiment.csv, this would be "Measurement_1".*
+
+*identifier (string): DataFrame column name containing the identifier which aggregates each cell into an experimental group. In the case of experiment.csv, this would be "Metadata_Well" which represents what well of a 96-well plate that a cell belongs to*
+
+*groupings (list of lists): Lists of identifier strings which contain the groupings for experimental (technical) replicates. Example of grouping definitions is contained within example.ipynb*
+
+*labels (list): List of labels to rename each experimental group. Label each group by order of appearance within the groupings argument. *
+
+*compare (list of lists): Lists of statistical comparisons to make between groupings by index. Example: compare = [[0,1],[1,2]] will perform a One Way ANOVA between columns 1 and 2 as well as columns 2 and 3*
+
+*obs_max (int): Number of observations per group to randomly sample (default 500). Note: the higher obs_max the more computationally demanding the plot function will be*
+
+*color: Matplotlib or seaborn color palette (default "Accent"). You can also define custom colors with sns.set_palette(sns.color_palette([colors]))*
+
+Example output:
+
 <img src="static/grouped_plot.png" width="300" />
 
 
+<br>
+<br>
+
+##  cytview.extract_values()
+Make use of CytView's measurement extraction function in order to generate a down-sampled dataset from your input data. This is useful if you wish to independently perform statistical analysis and visualisation with alternate graphing/plotting softwares. 
+
 ```python
-extract_values(dataframe, measurement, identifier, obs_max=500)
+cytview.extract_values(dataframe, measurement, identifier, obs_max=500)
 ```
+
+
+*dataframe (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
+
+*measurement (string): DataFrame column name containing the measurement of interest. In the case of experiment.csv, this would be "Measurement_1".*
+
+*identifier (string): DataFrame column name containing the identifier which aggregates each cell into an experimental group. In the case of experiment.csv, this would be "Metadata_Well" which represents what well of a 96-well plate that a cell belongs to*
+
+*obs_max (int): Number of observations per group to randomly sample (default 500). Note: the higher obs_max the more computationally demanding the plot function will be*
+
+
+Example output (first 5 rows):
 
 ```python
 
