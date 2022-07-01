@@ -4,15 +4,33 @@
 ### CytView is a python library which has been developed to handle high-throughout single cell datasets generated from software such as CellProfiler. 
 
 
+## API Reference
+
+### Example: Input Matrix (first 5 rows)
 
 
+| ImageNumber | ObjectNumber | Metadata_Well | Measurement_1 | Measurement_2 |
+|-------------|--------------|---------------|---------------|---------------|
+| 1           | 1            | A04           | 0.008474807   | 0.169154055   |
+| 1           | 2            | A04           | 0.01052627    | 0.114010939   |
+| 1           | 3            | A04           | 0.006294804   | 0.05234771    |
+| 1           | 4            | A04           | 0.006413796   | 0.006516079   |
+| 1           | 5            | A04           | 0.005213105   | 0.059943293   |
+
+
+##  cytview.cell_plot()
 
 ```python
-cell_plot(dataframe, measurment, identifier, obs_max = 500, color="Accent")
+cytview.cell_plot(dataframe, measurment, identifier, obs_max = 500, color="Accent")
 ```
+
+Randomly sample a subset of single-cell observations and plot cell-by-cell values CytView makes use of seaborn's swarmplot() and boxplot() functions and thus any plot-related parameters can be tweaked using matplotlib.
+
 <img src="static/cell_plot.png" />
 
 
+##  cytview.group_plot()
+Sample single-cell observations and group samples by experimental replicates.ell-by-cell values CytView makes use of seaborn's swarmplot() and boxplot
 
 ```python
 group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 500, color="Accent", compare=None, draw=False)
@@ -33,3 +51,4 @@ extract_values(dataframe, measurement, identifier, obs_max=500)
 2504  0.006326  0.006313  0.005011  0.005473  0.006047  0.005629  0.005572  0.006545  0.003686
 487   0.006662  0.009883  0.006966  0.006744  0.006802  0.002728  0.006406  0.006283  0.005750
 ```
+
