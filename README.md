@@ -10,6 +10,13 @@
 
 <br>
 
+## Installation:
+CytView can currently be installed directly from github using PIP.  
+```python
+pip install git+https://github.com/charliebidgood/CytView
+```
+
+<br>
 
 ## API Reference:
 <br>
