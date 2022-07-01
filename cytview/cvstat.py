@@ -67,9 +67,7 @@ def multi_comparison(dataframe, compare, groupings, labels, summary, draw):
     
     while n < len(compare):
          
-
         comparison = compare[n]
-        
         control_means =  np.mean(dataframe.loc[:,groupings[comparison[0]]])
         test_means = np.mean(dataframe.loc[:,groupings[comparison[1]]])
            
@@ -85,7 +83,6 @@ def multi_comparison(dataframe, compare, groupings, labels, summary, draw):
                
         n = n + 1
         
-
-
+ 
     if draw == True and perform_stats == True:
         draw_lines(pval_list, compare, groupings, summary)
