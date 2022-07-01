@@ -37,7 +37,7 @@ def cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Accent")
 
 
 
-def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 1000, color="Accent", compare=None, draw=False):
+def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 500, color="Accent", compare=None, draw=False):
 
     extracted_df = extract_values(dataframe, measurement, identifier, obs_max)
     
