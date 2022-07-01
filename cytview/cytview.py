@@ -6,10 +6,10 @@ import warnings
 
 from cytview import cvstat
 
-def extract_values(dataframe, measurment, identifier, obs_max=500):
+def extract_values(dataframe, measurement, identifier, obs_max=500):
     
     #generate a list of all values for each unique identifier
-    extracted_df = dataframe.groupby(identifier)[measurment].apply(list)
+    extracted_df = dataframe.groupby(identifier)[measurement].apply(list)
     # convert the set of lists to a dictionary and allow for unequal array lengths
     extracted_df = pd.DataFrame({k: pd.Series(l) for k, l in extracted_df.items()}).apply(pd.to_numeric).dropna()
   
@@ -17,9 +17,9 @@ def extract_values(dataframe, measurment, identifier, obs_max=500):
     return(extracted_df)
 
 
-def cell_plot(dataframe, measurment, identifier, obs_max = 500, color="Accent"):
+def cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Accent"):
        
-    extracted_df = extract_values(dataframe, measurment, identifier, obs_max)
+    extracted_df = extract_values(dataframe, measurement, identifier, obs_max)
       
     with warnings.catch_warnings():
         
@@ -37,9 +37,9 @@ def cell_plot(dataframe, measurment, identifier, obs_max = 500, color="Accent"):
 
 
 
-def group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 1000, color="Accent", compare=None, draw=False):
+def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 1000, color="Accent", compare=None, draw=False):
 
-    extracted_df = extract_values(dataframe, measurment, identifier, obs_max)
+    extracted_df = extract_values(dataframe, measurement, identifier, obs_max)
     
     # generate a dataframe containing the means of replicate samples
     grouped_df = pd.DataFrame([]) 
@@ -54,7 +54,7 @@ def group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 1
         grouped_df.columns.values[column] = labels[column]
     
     # plotting functions
-    plt.ylabel(measurment, fontsize = 15)
+    plt.ylabel(measurement, fontsize = 15)
 
     with warnings.catch_warnings():
          
