@@ -1,7 +1,7 @@
 
 <img src="static/logo.png" />
 
-## CytView is a python library which has been developed to handle high-throughout single cell imaging datasets generated from software such as CellProfiler. 
+## CytView is a python library which has been developed to handle high-throughput single cell imaging datasets generated from software such as CellProfiler. 
 
 
 <br><br>
