@@ -73,7 +73,7 @@ def multi_comparison(dataframe, compare, groupings, labels, summary, draw):
         test_means = np.mean(dataframe.loc[:,groupings[comparison[1]]])
            
         if len(control_means) < 2 or len(test_means) < 2:
-            #print("2 or more observations per sample (n) are required for statistics")
+            
             warning_msg = "2 or more observations per sample (n) are required to perform statistics between: " + \
             labels[comparison[0]] + " and " + labels[comparison[1]]
            
