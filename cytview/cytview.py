@@ -16,8 +16,8 @@ def extract_values(dataframe, measurement, identifier, obs_max=500):
     # check if the number of columns (after NaN removal) is larger than the obs_max value
     if extracted_df.shape[0] < obs_max:
 
-        warning_msg = "The number observations wanting to be sampled ( " + str(obs_max) +  " ) exceeds the number of useable " \
-        "rows included within the dataframe. CytView will therefore set the obs_max value to: " + str(extracted_df.shape[0])
+        warning_msg = "The number observations wanting to be sampled ( " + str(obs_max) +  " ) exceeds the number of useable ", \
+        "rows included within the dataframe. CytView will therefore set the obs_max value to: "
         warnings.warn(warning_msg)
         # if so update the obs_max value to the maximum column count
         obs_max = extracted_df.shape[0]    
