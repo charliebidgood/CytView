@@ -76,7 +76,7 @@ def multi_comparison(dataframe, compare, groupings, labels, summary, draw):
             
             warning_msg = "2 or more observations per sample (n) are required to perform statistics between: " + \
             labels[comparison[0]] + " and " + labels[comparison[1]]
-           
+            
             warnings.warn(str(warning_msg))
             perform_stats = False
             break
