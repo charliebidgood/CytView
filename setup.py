@@ -6,7 +6,7 @@ setup(
     packages=['cytview'],
     install_requires=['matplotlib==3.3.4', 
                       'seaborn==0.11.1',
-                      'numpy==1.23.3', 
+                      'numpy==1.21.6', 
                       'pandas==1.1.5',
                       'scipy==1.7.3'],
     version='1.0.0',
