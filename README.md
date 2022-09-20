@@ -36,7 +36,7 @@ pip install git+https://github.com/charliebidgood/CytView
 
 ##  cytview.cell_plot()
 
-Randomly sample a subset of single-cell observations and plot cell-by-cell values CytView makes use of seaborn's swarmplot() and boxplot() functions and thus any plot-related parameters can be tweaked using matplotlib.
+Randomly sample a subset of single-cell observations and plot cell-by-cell values. CytView makes use of seaborn's swarmplot() and boxplot() functions and thus any plot-related parameters can be tweaked using matplotlib.
 
 
 ```python
