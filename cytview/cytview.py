@@ -4,6 +4,9 @@ import pandas as pd
 import numpy as np
 import warnings
 
+warnings.simplefilter("ignore", UserWarning)
+warnings.simplefilter("ignore", FutureWarning)
+
 from cytview import cvstat
 
 def extract_values(dataframe, measurement, identifier, obs_max=500):
@@ -33,13 +36,9 @@ def cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Accent")
     extracted_df = extract_values(dataframe, measurement, identifier, obs_max)
       
     # swarmplot() will produce user errors if observations are falling outside the plot
-    with warnings.catch_warnings():
-        
-        warnings.simplefilter("ignore")
-        warnings.warn("UserWarning arose", UserWarning)
-        
-        pal = sns.set_palette(sns.color_palette(color))
-        sns.swarmplot(data=extracted_df, size=3, zorder=0.5,  palette=pal)
+
+    pal = sns.set_palette(sns.color_palette(color))
+    sns.swarmplot(data=extracted_df, size=3, zorder=0.5,  palette=pal)
 
     sns.boxplot(data=extracted_df, boxprops=dict(alpha=.5), whis=0.3,
                 color="black", sym='')
@@ -68,15 +67,9 @@ def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 
     
     # plotting functions
     plt.ylabel(measurement, fontsize = 15)
-    
-    # swarmplot() will produce user errors if observations are falling outside the plot
-    with warnings.catch_warnings():
-         
-        warnings.simplefilter("ignore")
-        warnings.warn("UserWarning arose", UserWarning)
-        
-        pal = sns.set_palette(sns.color_palette(color))
-        sns.swarmplot(data=grouped_df, size=3, zorder=0.5,  palette=pal)
+            
+    pal = sns.set_palette(sns.color_palette(color))
+    sns.swarmplot(data=grouped_df, size=3, zorder=0.5,  palette=pal)
     
     sns.boxplot(data=grouped_df, boxprops=dict(alpha=.5), whis=0.3,
                 color="black", sym='')
