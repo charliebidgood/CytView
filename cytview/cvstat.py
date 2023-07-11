@@ -68,9 +68,9 @@ def multi_comparison(dataframe, compare, groupings, labels, summary, draw):
     while n < len(compare):
          
         comparison = compare[n]
-        control_means =  np.mean(dataframe.loc[:,groupings[comparison[0]]])
-        test_means = np.mean(dataframe.loc[:,groupings[comparison[1]]])
-           
+        control_means =  dataframe.loc[:,groupings[comparison[0]]].mean(axis=0)
+        test_means = dataframe.loc[:,groupings[comparison[1]]].mean(axis=0)
+        
         if len(control_means) < 2 or len(test_means) < 2:
             
             warning_msg = "2 or more observations per sample (n) are required to perform statistics between: " + \
