@@ -1,10 +1,14 @@
 
 <img src="static/logo.png" />
 
+![Static Badge](https://img.shields.io/badge/Version-1.1.0-green)
+
 ## CytView is a python library which has been developed to handle high-throughput single cell imaging datasets generated from software such as CellProfiler. 
 Requires python >= 3.8
-
 <br><br>
+[Release History](RELEASES.md)
+
+
 
 ### A jupyter notebook (example.ipynb) and example dataset (dataset/experiment.csv) has been included within this repository to assist with ease-of-use.
 
