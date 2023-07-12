@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats as scipy
 import warnings
+import pandas as pd
 
 def significance(p):
     
@@ -13,14 +14,13 @@ def significance(p):
    else: return("")
 
 
-def draw_lines(pval_list, compare, groupings, summary):
+def draw_lines(pval_list, groupings, summary):
     # padding counter to prevent overlap of connecting lines
     pad_counter = np.full(shape=len(groupings), fill_value =0)
-    
-    n = 0
-    while n < len(compare):
         
-        comparison = compare[n]        
+    for idx, pvalue in enumerate(pval_list):
+        
+        comparison = [0,idx+1]       
         # pull boxplot data and esitamate the whisker length for both boxes
         b1_iqr = summary.iloc[:,comparison[0]]["75%"]
         b1_mean = summary.iloc[:,comparison[0]]["mean"]
@@ -50,43 +50,31 @@ def draw_lines(pval_list, compare, groupings, summary):
 
         # show significance symbols
         text_coord = (comparison[1] + comparison[0]) / 2
-        plt.text(text_coord, linemax, significance(pval_list[n]), ha="center", fontsize=20)
+        plt.text(text_coord, linemax, significance(pval_list[idx]), ha="center", fontsize=20)
 
         # add to padding counters
         pad_counter[comparison[0]] = pad_counter[comparison[0]] + 1
         pad_counter[comparison[1]] = pad_counter[comparison[1]] + 1
 
-        n = n + 1
+ 
 
-
-def multi_comparison(dataframe, compare, groupings, labels, summary, draw):
+def multi_comparison(dataframe, groupings, labels, summary, draw):
     
     perform_stats = True
-    pval_list = []
-    n = 0
+    control = dataframe[groupings[0]].mean(axis=1)
     
-    while n < len(compare):
-         
-        comparison = compare[n]
-        control_means =  np.mean(dataframe.loc[:,groupings[comparison[0]]])
-        test_means = np.mean(dataframe.loc[:,groupings[comparison[1]]])
+    tests = []
+    for idx, test in enumerate(groupings[1:]):
+        tests.append(dataframe[test].mean(axis=1).values)
+   
+    pval_list = scipy.dunnett(*tests, control=control).pvalue
+
+    for idx, pvalue in enumerate(pval_list):
+        
+        stars = significance(pvalue)
+        pval_notation = str('{:.2e}'.format(pvalue))
+
+        print(f"{labels[0]} vs {labels[idx+1]} : p value: {pval_notation} ({stars})")
            
-        if len(control_means) < 2 or len(test_means) < 2:
-            
-            warning_msg = "2 or more observations per sample (n) are required to perform statistics between: " + \
-            labels[comparison[0]] + " and " + labels[comparison[1]]
-            
-            warnings.warn(str(warning_msg))
-            perform_stats = False
-            break
-        
-        p_value = scipy.f_oneway(control_means, test_means)[1]
-        pval_list.append(p_value)
-        
-        print(labels[comparison[0]], "vs", labels[comparison[1]], ": p value: ", str(round(p_value,6)), " (", significance(p_value), ")")
-               
-        n = n + 1
-        
- 
     if draw == True and perform_stats == True:
-        draw_lines(pval_list, compare, groupings, summary)
+        draw_lines(pval_list, groupings, summary)
