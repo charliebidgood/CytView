@@ -48,7 +48,7 @@ def cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Accent")
 
 
 
-def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 500, color="Accent", compare=None, draw=False):
+def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 500, color="Accent", draw=False):
 
     extracted_df = extract_values(dataframe, measurement, identifier, obs_max)
     
@@ -74,9 +74,9 @@ def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 
     sns.boxplot(data=grouped_df, boxprops=dict(alpha=.5), whis=0.3,
                 color="black", sym='')
     
-    if(compare!=None):
-        cvstat.multi_comparison(dataframe = extracted_df, compare=compare, groupings=groupings,
-                                labels=labels, summary=grouped_df.describe(), draw=draw)
+
+    cvstat.multi_comparison(dataframe = extracted_df, groupings=groupings,
+                            labels=labels, summary=grouped_df.describe(), draw=draw)
            
     results = { "dataframe": grouped_df, "summary": grouped_df.describe()}
 
