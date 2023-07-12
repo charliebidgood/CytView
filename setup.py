@@ -8,7 +8,7 @@ setup(
                       'seaborn>=0.12.0',
                       'numpy>=1.23.3', 
                       'pandas>=1.5.0',
-                      'scipy>=1.11.0'],
+                      'scipy>=1.11.1'],
     version='1.1.0',
     license='MIT',
 
