@@ -55,6 +55,8 @@ cytview.cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Acce
 
 *obs_max (int): Number of observations per group to randomly sample (default 500)*
 
+*size (int): size of points to be plotted (default 3)*
+
 *color: Matplotlib or seaborn color palette (default "Accent"). You can also define custom colors with sns.set_palette(sns.color_palette([colors]))*
 
 cell_plot() also returns a dictionary containing the down-sampled dataframe which can be called with cell_plot()["dataframe"] and a data summary which can be called with cell_plot()["summary"]
@@ -87,6 +89,8 @@ cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max
 *compare (list of lists): Lists of statistical comparisons to make between groupings by index. Example: compare = [[0,1],[1,2]] will perform a One Way ANOVA between columns 1 and 2 as well as columns 2 and 3*
 
 *obs_max (int): Number of observations per group to randomly sample (default 500). Note: the higher obs_max the more computationally demanding the plot function will be*
+
+*size (int): size of points to be plotted (default 3)*
 
 *color: Matplotlib or seaborn color palette (default "Accent"). You can also define custom colors with sns.set_palette(sns.color_palette([colors]))*
 

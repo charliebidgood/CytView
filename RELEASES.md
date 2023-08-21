@@ -1,5 +1,8 @@
 # Release History
 
+## Version 1.1.1
+* Added the ability to change size of points within cell_plot() and group_plot()
+
 ## Version 1.1.0
 * Integrated Dunnett's multiple comparison test using SciPy 1.11's recently added function: [scipy.stats.dunnett()](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.dunnett.html).
 * Significance and P Values are now only generated between the first sample (control) and subsequent samples. Future revisions will add more comparison flexibility.

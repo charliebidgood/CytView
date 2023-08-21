@@ -31,14 +31,14 @@ def extract_values(dataframe, measurement, identifier, obs_max=500):
     return(extracted_df)
 
 
-def cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Accent"):
+def cell_plot(dataframe, measurement, identifier, obs_max = 500, size=3, color="Accent"):
        
     extracted_df = extract_values(dataframe, measurement, identifier, obs_max)
       
     # swarmplot() will produce user errors if observations are falling outside the plot
 
     pal = sns.set_palette(sns.color_palette(color))
-    sns.swarmplot(data=extracted_df, size=3, zorder=0.5,  palette=pal)
+    sns.swarmplot(data=extracted_df, size=size, zorder=0.5,  palette=pal)
 
     sns.boxplot(data=extracted_df, boxprops=dict(alpha=.5), whis=0.3,
                 color="black", sym='')
@@ -48,7 +48,7 @@ def cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Accent")
 
 
 
-def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 500, color="Accent", draw=False):
+def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 500, size=3, color="Accent", draw=False):
 
     extracted_df = extract_values(dataframe, measurement, identifier, obs_max)
     
@@ -69,7 +69,7 @@ def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 
     plt.ylabel(measurement, fontsize = 15)
             
     pal = sns.set_palette(sns.color_palette(color))
-    sns.swarmplot(data=grouped_df, size=3, zorder=0.5,  palette=pal)
+    sns.swarmplot(data=grouped_df, size=size, zorder=0.5,  palette=pal)
     
     sns.boxplot(data=grouped_df, boxprops=dict(alpha=.5), whis=0.3,
                 color="black", sym='')
