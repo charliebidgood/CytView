@@ -19,6 +19,12 @@ CytView can currently be installed directly from github using PIP.
 ```python
 pip install git+https://github.com/charliebidgood/CytView
 ```
+The devlopment version can be installed using PIP also.
+```python
+pip install git+https://github.com/charliebidgood/CytView@dev
+```
+
+
 
 <br>
 
@@ -47,17 +53,21 @@ Randomly sample a subset of single-cell observations and plot cell-by-cell value
 cytview.cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Accent")
 ```
 
-*dataframe (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
+***dataframe** (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
 
-*measurement (string): DataFrame column name containing the measurement of interest. In the case of experiment.csv, this would be "Measurement_1".*
+***measurement** (string): DataFrame column name containing the measurement of interest. In the case of experiment.csv, this would be "Measurement_1".*
 
-*identifier (string): DataFrame column name containing the identifier which aggregates each cell into an experimental group. In the case of experiment.csv, this would be "Metadata_Well" which represents what well of a 96-well plate that a cell belongs to*
+***identifier** (string): DataFrame column name containing the identifier which aggregates each cell into an experimental group. In the case of experiment.csv, this would be "Metadata_Well" which represents what well of a 96-well plate that a cell belongs to*
 
-*obs_max (int): Number of observations per group to randomly sample (default 500)*
+***obs_max** (int): Number of observations per group to randomly sample (default 500)*
 
+<<<<<<< HEAD
 *size (int): size of points to be plotted (default 3)*
 
 *color: Matplotlib or seaborn color palette (default "Accent"). You can also define custom colors with sns.set_palette(sns.color_palette([colors]))*
+=======
+***color**: Matplotlib or seaborn color palette (default "Accent"). You can also define custom colors with sns.set_palette(sns.color_palette([colors]))*
+>>>>>>> origin/main
 
 cell_plot() also returns a dictionary containing the down-sampled dataframe which can be called with cell_plot()["dataframe"] and a data summary which can be called with cell_plot()["summary"]
 
@@ -73,26 +83,28 @@ Example Output:
 Sample single-cell observations, group samples as experimental replicates and perform comparative statistics to determine significance.
 
 ```python
-cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 500, color="Accent", compare=None, draw=False)
+cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 500, color="Accent", draw=False)
 ```
 
-*dataframe (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
+***dataframe** (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
 
-*measurement (string): DataFrame column name containing the measurement of interest. In the case of experiment.csv, this would be "Measurement_1".*
+***measurement** (string): DataFrame column name containing the measurement of interest. In the case of experiment.csv, this would be "Measurement_1".*
 
-*identifier (string): DataFrame column name containing the identifier which aggregates each cell into an experimental group. In the case of experiment.csv, this would be "Metadata_Well" which represents what well of a 96-well plate that a cell belongs to*
+***identifier** (string): DataFrame column name containing the identifier which aggregates each cell into an experimental group. In the case of experiment.csv, this would be "Metadata_Well" which represents what well of a 96-well plate that a cell belongs to*
 
-*groupings (list of lists): Lists of identifier strings which contain the groupings for experimental (technical) replicates. Example of grouping definitions is contained within example.ipynb*
+***groupings** (list of lists): Lists of identifier strings which contain the groupings for experimental (technical) replicates. Example of grouping definitions is contained within example.ipynb*
 
-*labels (list): List of labels to rename each experimental group. Label each group by order of appearance within the groupings argument. *
+***labels** (list): List of labels to rename each experimental group. Label each group by order of appearance within the groupings argument. *
 
-*compare (list of lists): Lists of statistical comparisons to make between groupings by index. Example: compare = [[0,1],[1,2]] will perform a One Way ANOVA between columns 1 and 2 as well as columns 2 and 3*
+***obs_max** (int): Number of observations per group to randomly sample (default 500). Note: the higher obs_max the more computationally demanding the plot function will be*
 
-*obs_max (int): Number of observations per group to randomly sample (default 500). Note: the higher obs_max the more computationally demanding the plot function will be*
-
+<<<<<<< HEAD
 *size (int): size of points to be plotted (default 3)*
 
 *color: Matplotlib or seaborn color palette (default "Accent"). You can also define custom colors with sns.set_palette(sns.color_palette([colors]))*
+=======
+***color**: Matplotlib or seaborn color palette (default "Accent"). You can also define custom colors with sns.set_palette(sns.color_palette([colors]))*
+>>>>>>> origin/main
 
 Example output:
 
@@ -110,13 +122,13 @@ cytview.extract_values(dataframe, measurement, identifier, obs_max=500)
 ```
 
 
-*dataframe (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
+***dataframe** (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
 
-*measurement (string): DataFrame column name containing the measurement of interest. In the case of experiment.csv, this would be "Measurement_1".*
+***measurement** (string): DataFrame column name containing the measurement of interest. In the case of experiment.csv, this would be "Measurement_1".*
 
-*identifier (string): DataFrame column name containing the identifier which aggregates each cell into an experimental group. In the case of experiment.csv, this would be "Metadata_Well" which represents what well of a 96-well plate that a cell belongs to*
+***identifier** (string): DataFrame column name containing the identifier which aggregates each cell into an experimental group. In the case of experiment.csv, this would be "Metadata_Well" which represents what well of a 96-well plate that a cell belongs to*
 
-*obs_max (int): Number of observations per group to randomly sample (default 500). Note: the higher obs_max the more computationally demanding the plot function will be*
+***obs_max** (int): Number of observations per group to randomly sample (default 500). Note: the higher obs_max the more computationally demanding the plot function will be*
 
 
 Example output (first 5 rows):
