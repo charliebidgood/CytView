@@ -50,7 +50,7 @@ Randomly sample a subset of single-cell observations and plot cell-by-cell value
 
 
 ```python
-cytview.cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Accent")
+cytview.cell_plot(dataframe, measurement, identifier, obs_max = 500, size = 3, color="Accent")
 ```
 
 ***dataframe** (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
@@ -61,6 +61,7 @@ cytview.cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Acce
 
 ***obs_max** (int): Number of observations per group to randomly sample (default 500)*
 
+***size** (int): Size of plotted points (default 3)*
 <<<<<<< HEAD
 *size (int): size of points to be plotted (default 3)*
 
@@ -83,7 +84,7 @@ Example Output:
 Sample single-cell observations, group samples as experimental replicates and perform comparative statistics to determine significance.
 
 ```python
-cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 500, color="Accent", draw=False)
+cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 500, size = 3, color="Accent", draw=False)
 ```
 
 ***dataframe** (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
@@ -98,6 +99,7 @@ cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max
 
 ***obs_max** (int): Number of observations per group to randomly sample (default 500). Note: the higher obs_max the more computationally demanding the plot function will be*
 
+***size** (int): Size of plotted points (default 3)*
 <<<<<<< HEAD
 *size (int): size of points to be plotted (default 3)*
 
