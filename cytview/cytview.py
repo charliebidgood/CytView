@@ -41,7 +41,7 @@ def cell_plot(dataframe, measurement, identifier, obs_max = 500, size=3, color="
     sns.swarmplot(data=extracted_df, size=size, zorder=0.5,  palette=pal)
 
     sns.boxplot(data=extracted_df, boxprops=dict(alpha=.5), whis=0.3,
-                color="black", sym='')
+                color="black", showfliers=False)
 
     results = {"dataframe": extracted_df, "summary": extracted_df.describe()}
     return(results)
@@ -72,7 +72,7 @@ def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 
     sns.swarmplot(data=grouped_df, size=size, zorder=0.5,  palette=pal)
     
     sns.boxplot(data=grouped_df, boxprops=dict(alpha=.5), whis=0.3,
-                color="black", sym='')
+                color="black", showfliers=False)
     
 
     cvstat.multi_comparison(dataframe = extracted_df, groupings=groupings,
