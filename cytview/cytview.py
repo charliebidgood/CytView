@@ -38,7 +38,8 @@ def cell_plot(dataframe, measurement, identifier, obs_max = 500, size=3, color="
     # swarmplot() will produce user errors if observations are falling outside the plot
 
     pal = sns.set_palette(sns.color_palette(color))
-    sns.swarmplot(data=extracted_df, size=size, zorder=0.5,  palette=pal)
+    sns.swarmplot(data=extracted_df, size=size, zorder=0.5,  palette=pal, 
+                  edgecolor="gray", linewidth=0.25)
 
     sns.boxplot(data=extracted_df, boxprops=dict(alpha=.5), whis=0.3,
                 color="black", showfliers=False)
@@ -69,7 +70,8 @@ def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 
     plt.ylabel(measurement, fontsize = 15)
             
     pal = sns.set_palette(sns.color_palette(color))
-    sns.swarmplot(data=grouped_df, size=size, zorder=0.5,  palette=pal)
+    sns.swarmplot(data=grouped_df, size=size, zorder=0.5,  
+                  palette=pal, edgecolor="gray", linewidth=0.25)
     
     sns.boxplot(data=grouped_df, boxprops=dict(alpha=.5), whis=0.3,
                 color="black", showfliers=False)
