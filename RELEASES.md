@@ -2,6 +2,7 @@
 
 
 ## Version 1.1.1
+* Added "ax" argument to plot functions for subplotting. Will add *kwargs functionality later to support other swarmplot arguments
 * Added the ability to change size of points within cell_plot() and group_plot()
 * Removed drawing of the statistical comparison lines, too difficult to control for 
 * Downsampling now ignores NaN values and variable sample sizes are now allowed. This prevents groups with low sample sizes (n) affecting the rest of the dataset. 

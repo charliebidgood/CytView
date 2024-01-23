@@ -26,24 +26,25 @@ def extract_values(dataframe, measurement, identifier, obs_max=1000):
     return(filtered_df)
 
 
-def cell_plot(dataframe, measurement, identifier, obs_max = 1000, size=3, color="Accent"):
+def cell_plot(dataframe, measurement, identifier, obs_max = 1000, 
+              size=3, color="Accent", ax=None):
     
     extracted_df = extract_values(dataframe, measurement, identifier, obs_max)
     # swarmplot() will produce user errors if observations are falling outside the plot
     pal = sns.set_palette(sns.color_palette(color))
+
     sns.swarmplot(data=extracted_df, size=size, zorder=0.5,  palette=pal, 
-                  edgecolor="gray", linewidth=0.25)
+                  edgecolor="gray", linewidth=0.25, ax=ax)
 
     sns.boxplot(data=extracted_df, boxprops=dict(alpha=.5), whis=0.3,
-                color="black", showfliers=False)
+                color="black", showfliers=False, ax=ax)
 
     results = {"dataframe": extracted_df, "summary": extracted_df.describe()}
     return(results)
 
 
-
-
-def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 1000, size=3, color="Accent", draw=False):
+def group_plot(dataframe, measurement, identifier, groupings, labels, 
+               obs_max = 1000, size=3, color="Accent", draw=False, ax=None):
 
     extracted_df = extract_values(dataframe, measurement, identifier, obs_max)
     
@@ -65,10 +66,10 @@ def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 
             
     pal = sns.set_palette(sns.color_palette(color))
     sns.swarmplot(data=grouped_df, size=size, zorder=0.5,  
-                  palette=pal, edgecolor="gray", linewidth=0.25)
+                  palette=pal, edgecolor="gray", linewidth=0.25, ax=ax)
     
     sns.boxplot(data=grouped_df, boxprops=dict(alpha=.5), whis=0.3,
-                color="black", showfliers=False)
+                color="black", showfliers=False, ax=ax)
     
 
     stats_table = cvstat.multi_comparison(dataframe = extracted_df, groupings=groupings,
