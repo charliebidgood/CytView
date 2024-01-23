@@ -45,7 +45,7 @@ pip install git+https://github.com/charliebidgood/CytView@dev
 <br>
 
 
-## Notes / Tips
+
 ## Notes / Tips
 * Cytview will randomly down-sample your data through use of the "obs_max" argument (default is set to 1000 samples). For larger datasets this is extremely useful in reducing both compute and plot time. It should be kept in mind however, that plots and statistics will be variable across different runs depending on the degree of down-sampling used.
 * In the grouped plot, Dunnett's Multiple Comparison Test is used to compare the means of each sample group against the mean of the control group (always first group). This is currently an experimental feature and is highly recommended that you perform any statistical calculations outside of CytView using a validated method.
