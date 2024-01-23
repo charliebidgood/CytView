@@ -50,7 +50,7 @@ Randomly sample a subset of single-cell observations and plot cell-by-cell value
 
 
 ```python
-cytview.cell_plot(dataframe, measurement, identifier, obs_max = 500, size = 3, color="Accent")
+cytview.cell_plot(dataframe, measurement, identifier, obs_max = 1000, size = 3, color="Accent")
 ```
 
 ***dataframe** (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
@@ -80,7 +80,7 @@ Example Output:
 Sample single-cell observations, group samples as experimental replicates and perform comparative statistics to determine significance.
 
 ```python
-cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 500, size = 3, color="Accent", draw=False)
+cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 1000, size = 3, color="Accent", draw=False)
 ```
 
 ***dataframe** (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
@@ -112,7 +112,7 @@ Example output:
 Make use of CytView's measurement extraction function in order to generate a down-sampled dataset from your input data. This is useful if you wish to independently perform statistical analysis and visualisation with alternate graphing/plotting softwares. 
 
 ```python
-cytview.extract_values(dataframe, measurement, identifier, obs_max=500)
+cytview.extract_values(dataframe, measurement, identifier, obs_max=1000)
 ```
 
 ***dataframe** (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 

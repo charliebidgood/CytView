@@ -9,34 +9,27 @@ warnings.simplefilter("ignore", FutureWarning)
 
 from cytview import cvstat
 
-def extract_values(dataframe, measurement, identifier, obs_max=500):
+def extract_values(dataframe, measurement, identifier, obs_max=1000):
     
     # generate a list of all values for each unique identifier
     extracted_df = dataframe.groupby(identifier)[measurement].apply(list)
     # convert the set of lists to a dictionary and allow for unequal array lengths
-    extracted_df = pd.DataFrame({k: pd.Series(l) for k, l in extracted_df.items()}).apply(pd.to_numeric).dropna()
+    extracted_df = pd.DataFrame({k: pd.Series(l) for k, l in extracted_df.items()}).apply(pd.to_numeric)
     
-    # check if the number of columns (after NaN removal) is larger than the obs_max value
-    if extracted_df.shape[0] < obs_max:
-
-        warning_msg = "The number observations wanting to be sampled ( " + str(obs_max) +  " ) exceeds the number of useable " + \
-        "rows included within the dataframe. CytView will therefore set the obs_max value to: " + str(extracted_df.shape[0])
-        print(warning_msg)
-        warnings.warn(warning_msg)
-        # if so update the obs_max value to the maximum column count
-        obs_max = extracted_df.shape[0]    
-        
-    # down sample the dataset to the obs_max value 
-    extracted_df = extracted_df.sample(n=obs_max)
-    return(extracted_df)
+    filtered_df = pd.DataFrame([])
+    for column in extracted_df.columns:
+        values = extracted_df[column][extracted_df[column].notnull()]
+        if values.shape[0] < obs_max:
+            filtered_df[column] = values.sample(n=values.shape[0], ignore_index=True)
+        else:
+            filtered_df[column] = values.sample(n=obs_max, ignore_index=True)
+    return(filtered_df)
 
 
-def cell_plot(dataframe, measurement, identifier, obs_max = 500, size=3, color="Accent"):
-       
+def cell_plot(dataframe, measurement, identifier, obs_max = 1000, size=3, color="Accent"):
+    
     extracted_df = extract_values(dataframe, measurement, identifier, obs_max)
-      
     # swarmplot() will produce user errors if observations are falling outside the plot
-
     pal = sns.set_palette(sns.color_palette(color))
     sns.swarmplot(data=extracted_df, size=size, zorder=0.5,  palette=pal, 
                   edgecolor="gray", linewidth=0.25)
@@ -49,7 +42,8 @@ def cell_plot(dataframe, measurement, identifier, obs_max = 500, size=3, color="
 
 
 
-def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 500, size=3, color="Accent", draw=False):
+
+def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 1000, size=3, color="Accent", draw=False):
 
     extracted_df = extract_values(dataframe, measurement, identifier, obs_max)
     
@@ -77,10 +71,10 @@ def group_plot(dataframe, measurement, identifier, groupings, labels, obs_max = 
                 color="black", showfliers=False)
     
 
-    cvstat.multi_comparison(dataframe = extracted_df, groupings=groupings,
+    stats_table = cvstat.multi_comparison(dataframe = extracted_df, groupings=groupings,
                             labels=labels, summary=grouped_df.describe(), draw=draw)
            
-    results = { "dataframe": grouped_df, "summary": grouped_df.describe()}
+    results = { "dataframe": grouped_df, "summary": grouped_df.describe(), "stats":stats_table}
 
     return(results)
 
