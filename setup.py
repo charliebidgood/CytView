@@ -9,7 +9,7 @@ setup(
                       'numpy>=1.23.3', 
                       'pandas>=1.5.0',
                       'scipy>=1.11.1'],
-    version='1.1.1_dev',
+    version='1.1.1',
     license='MIT',
 
 )
