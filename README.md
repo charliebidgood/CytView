@@ -1,7 +1,7 @@
 
 <img src="static/logo.png" />
 
-![Static Badge](https://img.shields.io/badge/Version-1.1.0-green)
+![Static Badge](https://img.shields.io/badge/Version-1.1.1-green)
 
 ## CytView is a python library which has been developed to handle high-throughput single cell imaging datasets generated from software such as CellProfiler. 
 Requires python >= 3.9 and <= 3.12
@@ -44,13 +44,22 @@ pip install git+https://github.com/charliebidgood/CytView@dev
 
 <br>
 
+
+
+## Notes / Tips
+* Cytview will randomly down-sample your data through use of the "obs_max" argument (default is set to 1000 samples). For larger datasets this is extremely useful in reducing both compute and plot time. It should be kept in mind however, that plots and statistics will be variable across different runs depending on the degree of down-sampling used.
+* In the grouped plot, Dunnett's Multiple Comparison Test is used to compare the means of each sample group against the mean of the control group (always first group). This is currently an experimental feature and is highly recommended that you perform any statistical calculations outside of CytView using a validated method.
+* You can easily export your down-sampled dataset with the extract_values() and pandas to_csv() function to easily create a .csv file which can be quickly transferred to GraphPad Prism or any other plotting software or statistical packages.
+
+
+
 ##  cytview.cell_plot()
 
 Randomly sample a subset of single-cell observations and plot cell-by-cell values. CytView makes use of seaborn's swarmplot() and boxplot() functions and thus any plot-related parameters can be tweaked using matplotlib.
 
 
 ```python
-cytview.cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Accent")
+cytview.cell_plot(dataframe, measurement, identifier, obs_max = 1000, size = 3, color="Accent")
 ```
 
 ***dataframe** (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
@@ -59,9 +68,13 @@ cytview.cell_plot(dataframe, measurement, identifier, obs_max = 500, color="Acce
 
 ***identifier** (string): DataFrame column name containing the identifier which aggregates each cell into an experimental group. In the case of experiment.csv, this would be "Metadata_Well" which represents what well of a 96-well plate that a cell belongs to*
 
-***obs_max** (int): Number of observations per group to randomly sample (default 500)*
+***obs_max** (int): Number of observations per group to randomly sample (default 1000)*
+
+***size** (int): Size of plotted points (default 3)*
 
 ***color**: Matplotlib or seaborn color palette (default "Accent"). You can also define custom colors with sns.set_palette(sns.color_palette([colors]))*
+
+***ax***: Axes object to draw the plot onto, otherwise uses the current Axes.*
 
 cell_plot() also returns a dictionary containing the down-sampled dataframe which can be called with cell_plot()["dataframe"] and a data summary which can be called with cell_plot()["summary"]
 
@@ -77,7 +90,7 @@ Example Output:
 Sample single-cell observations, group samples as experimental replicates and perform comparative statistics to determine significance.
 
 ```python
-cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 500, color="Accent", draw=False)
+cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max = 1000, size = 3, color="Accent", draw=False)
 ```
 
 ***dataframe** (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
@@ -90,9 +103,13 @@ cytview.group_plot(dataframe, measurment, identifier, groupings, labels, obs_max
 
 ***labels** (list): List of labels to rename each experimental group. Label each group by order of appearance within the groupings argument. *
 
-***obs_max** (int): Number of observations per group to randomly sample (default 500). Note: the higher obs_max the more computationally demanding the plot function will be*
+***obs_max** (int): Number of observations per group to randomly sample (default 1000). Note: the higher obs_max the more computationally demanding the plot function will be*
+
+***size** (int): Size of plotted points (default 3)*
 
 ***color**: Matplotlib or seaborn color palette (default "Accent"). You can also define custom colors with sns.set_palette(sns.color_palette([colors]))*
+
+***ax***: Axes object to draw the plot onto, otherwise uses the current Axes.*
 
 Example output:
 
@@ -106,9 +123,8 @@ Example output:
 Make use of CytView's measurement extraction function in order to generate a down-sampled dataset from your input data. This is useful if you wish to independently perform statistical analysis and visualisation with alternate graphing/plotting softwares. 
 
 ```python
-cytview.extract_values(dataframe, measurement, identifier, obs_max=500)
+cytview.extract_values(dataframe, measurement, identifier, obs_max=1000)
 ```
-
 
 ***dataframe** (pd.DataFrame): Pandas DataFrame object containing cell-by-cell measurements and group identifiers.* 
 
