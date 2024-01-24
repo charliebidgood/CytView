@@ -61,8 +61,16 @@ def group_plot(dataframe, measurement, identifier, groupings, labels,
     for column in range(grouped_df.shape[1]):
         grouped_df.columns.values[column] = labels[column]
     
+
     # plotting functions
-    plt.ylabel(measurement, fontsize = 15)
+    if ax != None:
+        ax.set_ylabel(measurement, fontsize = 15)
+    else:
+        plt.ylabel(measurement, fontsize = 15)
+
+
+
+    
             
     pal = sns.set_palette(sns.color_palette(color))
     sns.swarmplot(data=grouped_df, size=size, zorder=0.5,  
@@ -73,7 +81,7 @@ def group_plot(dataframe, measurement, identifier, groupings, labels,
     
 
     stats_table = cvstat.multi_comparison(dataframe = extracted_df, groupings=groupings,
-                            labels=labels, summary=grouped_df.describe(), draw=draw)
+                            labels=labels, summary=grouped_df.describe(), draw=draw, ax=ax)
            
     results = { "dataframe": grouped_df, "summary": grouped_df.describe(), "stats":stats_table}
 

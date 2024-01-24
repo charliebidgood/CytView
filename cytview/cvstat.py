@@ -13,17 +13,22 @@ def significance(p):
    elif (p > 0.05): return("ns")
    else: return("")
 
+def draw_stars(pval_list, groupings, summary, ax):
 
-def draw_stars(pval_list, groupings, summary):
     # padding counter to prevent overlap of connecting lines    
     for idx, pvalue in enumerate(pval_list):
         upper_quartile = summary.iloc[:,idx+1]["75%"]
         mean_value = summary.iloc[:,idx+1]["mean"]
         y_star = (upper_quartile - mean_value) + upper_quartile
         x_star = idx+1
-        plt.text(x_star, y_star, significance(pval_list[idx]), ha="center", fontsize=10)
+        
+        if ax != None:
+            ax.text(x_star, y_star, significance(pval_list[idx]), ha="center", fontsize=10)
+        else:
+            plt.text(x_star, y_star, significance(pval_list[idx]), ha="center", fontsize=10)
 
-def multi_comparison(dataframe, groupings, labels, summary, draw):
+
+def multi_comparison(dataframe, groupings, labels, summary, draw, ax):
     control = dataframe[groupings[0]].mean(axis=1).dropna()
     tests = []
 
@@ -45,5 +50,5 @@ def multi_comparison(dataframe, groupings, labels, summary, draw):
         stats_table = pd.concat([stats_table, entry])
                    
     if draw == True:
-        draw_stars(pval_list, groupings, summary)
+        draw_stars(pval_list, groupings, summary, ax=ax)
     return (stats_table)
