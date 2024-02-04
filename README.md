@@ -19,11 +19,10 @@ CytView can currently be installed directly from github using PIP.
 ```python
 pip install git+https://github.com/charliebidgood/CytView
 ```
-The devlopment version can be installed using PIP also.
+The development version can be installed using PIP also.
 ```python
 pip install git+https://github.com/charliebidgood/CytView@dev
 ```
-
 
 
 <br>
